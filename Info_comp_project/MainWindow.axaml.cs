@@ -25,7 +25,15 @@ public partial class MainWindow : Window
 
     private async void Request_OnClick(object? sender, RoutedEventArgs e)
     {
-        /*
+        if (DNS_name.Text == " " || loginTB.Text == " " || PassTB.Text == " ")
+        {
+            var messageBoxStandardWindow33 = MessageBox.Avalonia.MessageBoxManager
+                .GetMessageBoxStandardWindow("Ошибка!","Пустые поля!");
+            messageBoxStandardWindow33.Show();
+        }
+        else
+        {
+            /*
             Имя компьютера - hostname
             Процессор - cat /proc/cpuinfo
             материнская плата - sudo dmesg | grep DMI:
@@ -35,13 +43,25 @@ public partial class MainWindow : Window
             сетевая карта -  lspci | grep -i 'net'            
         */
         
-        var domain_name = await Dns.GetHostEntryAsync(DNS_name.Text);
+        ProcessStartInfo startInfo2 = new ProcessStartInfo() { FileName = "/bin/bash", Arguments = "mkdir info", }; 
+        Process proces = new Process() { StartInfo = startInfo2, };
+        proces.Start();
+        
+        
+        var mainhost = System.Net.Dns.GetHostName();
+        IPAddress addres1 = Dns.GetHostAddresses(mainhost).First<IPAddress>(f=>f.AddressFamily==System.Net.Sockets.AddressFamily.InterNetwork);
+        string addres2 = Convert.ToString(addres1);
+
+        var abc = await Dns.GetHostEntryAsync(DNS_name.Text);
+        string domain_name = Convert.ToString(abc);
+        IPAddress addres3 = Dns.GetHostAddresses(domain_name).First<IPAddress>(f=>f.AddressFamily==System.Net.Sockets.AddressFamily.InterNetwork);
+        string addres4 = Convert.ToString(addres3);
         string host = Convert.ToString(domain_name);
         string username;
         string password;
         username = loginTB.Text;
         password = PassTB.Text;
-        
+
         var connect_info = new ConnectionInfo(host, username, new PasswordAuthenticationMethod(username, password));
         
         using (var client = new SshClient(connect_info))
@@ -54,21 +74,22 @@ public partial class MainWindow : Window
             var runner5 = client.RunCommand("lspci | grep -E  'VGA|3D' > GPUout.txt");
             var runner6 = client.RunCommand("sudo dmidecode --type 17 > OZUout.txt");
             var runner7 = client.RunCommand("lspci | grep -i 'net' > netcard.txt");
-            
+
+            var runner23 = client.RunCommand("mkdir test");
             var runner8 =
-                client.RunCommand("scp ./hostname.txt basicks@192.168.56.128:~/test");
+                client.RunCommand($"scp ./hostname.txt {host}@{addres2}:~/test");
             var runner9 =
-                client.RunCommand("scp ./cpu.txt basicks@192.168.56.128:~/test");
+                client.RunCommand($"scp ./cpu.txt {host}@{addres2}:~/test");
             var runner10 =
-                client.RunCommand("scp ./motherboard.txt basicks@192.168.56.128:~/test");
+                client.RunCommand($"scp ./motherboard.txt {host}@{addres2}:~/test");
             var runner11 =
-                client.RunCommand("scp ./harddisk.txt basicks@192.168.56.128:~/test");
+                client.RunCommand($"scp ./harddisk.txt {host}@{addres2}:~/test");
             var runner12 =
-                client.RunCommand("scp ./GPUout.txt basicks@192.168.56.128:~/test");
+                client.RunCommand($"scp ./GPUout.txt {host}@{addres2}:~/test");
             var runner13 =
-                client.RunCommand("scp ./OZUout.txt basicks@192.168.56.128:~/test");
+                client.RunCommand($"scp ./OZUout.txt {host}@{addres2}:~/test");
             var runner14 =
-                client.RunCommand("scp ./netcard.txt basicks@192.168.56.128:~/test"); 
+                client.RunCommand($"scp ./netcard.txt {host}@{addres2}:~/test"); 
             
             var runner15 = client.RunCommand("rm hostname.txt");
             var runner16 = client.RunCommand("rm cpu.txt");
@@ -77,6 +98,8 @@ public partial class MainWindow : Window
             var runner19 = client.RunCommand("rm GPUout.txt");
             var runner20 = client.RunCommand("rm OZUout.txt");
             var runner21 = client.RunCommand("rm netcard.txt");
+            var runner22 = client.RunCommand("rmdir test");
+
             
             client.Disconnect();
             if (runner.ExitStatus != 0)
@@ -206,25 +229,25 @@ public partial class MainWindow : Window
                 messageBoxStandardWindow21.Show();
             }
         }
-        
+
         List<Info_comps> ic2 = new List<Info_comps>();
-        string[] str =  File.ReadAllLines(@"C:\Users\sasha\OneDrive\Рабочий стол\info\cputest.txt");
-        string[] str2 =  File.ReadAllLines(@"C:\Users\sasha\OneDrive\Рабочий стол\info\hostname.txt");
-        string[] str3 =  File.ReadAllLines(@"C:\Users\sasha\OneDrive\Рабочий стол\info\mattest.txt");
-        string[] str4 =  File.ReadAllLines(@"C:\Users\sasha\OneDrive\Рабочий стол\info\OZUout.txt");
-        string[] str5 =  File.ReadAllLines(@"C:\Users\sasha\OneDrive\Рабочий стол\info\GPUout.txt");
-        string[] str6 =  File.ReadAllLines(@"C:\Users\sasha\OneDrive\Рабочий стол\info\harddisk.txt");
-        string[] str7 =  File.ReadAllLines(@"C:\Users\sasha\OneDrive\Рабочий стол\info\netcard.txt");
+        string[] str =  File.ReadAllLines(@".\info\cputest.txt");
+        string[] str2 =  File.ReadAllLines(@".\info\hostname.txt");
+        string[] str3 =  File.ReadAllLines(@".\info\mattest.txt");
+        string[] str4 =  File.ReadAllLines(@".\info\OZUout.txt");
+        string[] str5 =  File.ReadAllLines(@".\info\GPUout.txt");
+        string[] str6 =  File.ReadAllLines(@".\info\harddisk.txt");
+        string[] str7 =  File.ReadAllLines(@".\info\netcard.txt");
 
         
-        string hs="1", cpu ="1", motherboard="1", harddisk = "1", videocard = "1", ozu = "1", networkcard = "1";
+        string hs="1", cpu ="1", motherboard="1", harddisk = "1", videocard = "1", ozu = "1", networkcard = "1", proc = "1";
         int count=0;
         
         for (int i = 0; i < str.Length; i++)
         {
             if (str[i].Contains("model name"))
             {
-                string proc = str[i].Split(':')[1];
+                proc = str[i].Split(':')[1];
                 cpu = proc;
                 count++;
                 ic2.Add(new Info_comps()
@@ -249,7 +272,7 @@ public partial class MainWindow : Window
         for (int i = 0; i < str3.Length; i++)
         {
             
-            string proc = str3[i].Split(':')[1];
+            proc = str3[i].Split(':')[1];
             motherboard = proc;
             count++;
             ic2.Add(new Info_comps()
@@ -320,12 +343,17 @@ public partial class MainWindow : Window
             break;
         }
         Table1.Items = ic2;
-        ProcessStartInfo startInfo = new ProcessStartInfo() {FileName = "/bin/bash", Arguments = "rm cputest.txt hostname.txt mattest.txt OZUout.txt GPUout.txt harddisk.txt netcard.txt"};
-        Process proces = new Process() { StartInfo = startInfo, };
+        ProcessStartInfo startInfo = new ProcessStartInfo() {FileName = "/bin/bash", Arguments = "cd ./info; rm cputest.txt hostname.txt mattest.txt OZUout.txt GPUout.txt harddisk.txt netcard.txt"};
+        proces = new Process() { StartInfo = startInfo, };
         proces.Start();
         var messageBoxStandardWindow22 = MessageBox.Avalonia.MessageBoxManager
             .GetMessageBoxStandardWindow("Успешно!", "запрос выполнился!");
         messageBoxStandardWindow22.Show();
+        
+        ProcessStartInfo startInfo3 = new ProcessStartInfo() { FileName = "/bin/bash", Arguments = "rmdir info", }; 
+        Process proces2 = new Process() { StartInfo = startInfo3, };
+        proces2.Start();
+        }
     }
 
     private void OnAutoGeneratingColumn(object? sender, DataGridAutoGeneratingColumnEventArgs e)
