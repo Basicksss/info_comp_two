@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using System.Net;
@@ -30,12 +32,10 @@ public partial class MainWindow : Window
             жесткий диск - lsblk
             видеокарта - lspci | grep -E "VGA|3D"
             озу - sudo dmidecode --type 17
-            сетевая карта -  lspci | grep -i 'net'
-            утилиты -
-            
-            
+            сетевая карта -  lspci | grep -i 'net'            
         */
-        /*var domain_name = await Dns.GetHostEntryAsync(DNS_name.Text);
+        
+        var domain_name = await Dns.GetHostEntryAsync(DNS_name.Text);
         string host = Convert.ToString(domain_name);
         string username;
         string password;
@@ -50,12 +50,34 @@ public partial class MainWindow : Window
             var runner = client.RunCommand("lscpu > hostname.txt");
             var runner2 = client.RunCommand("cat /proc/cpuinfo > cpu.txt");
             var runner3 = client.RunCommand("sudo dmesg | grep DMI: > motherboard.txt");
-            var runner4 =
+            var runner4 = client.RunCommand("lsblk > harddisk.txt");
+            var runner5 = client.RunCommand("lspci | grep -E  'VGA|3D' > GPUout.txt");
+            var runner6 = client.RunCommand("sudo dmidecode --type 17 > OZUout.txt");
+            var runner7 = client.RunCommand("lspci | grep -i 'net' > netcard.txt");
+            
+            var runner8 =
                 client.RunCommand("scp ./hostname.txt basicks@192.168.56.128:~/test");
-            var runner5 =
+            var runner9 =
                 client.RunCommand("scp ./cpu.txt basicks@192.168.56.128:~/test");
-            var runner6 =
+            var runner10 =
                 client.RunCommand("scp ./motherboard.txt basicks@192.168.56.128:~/test");
+            var runner11 =
+                client.RunCommand("scp ./harddisk.txt basicks@192.168.56.128:~/test");
+            var runner12 =
+                client.RunCommand("scp ./GPUout.txt basicks@192.168.56.128:~/test");
+            var runner13 =
+                client.RunCommand("scp ./OZUout.txt basicks@192.168.56.128:~/test");
+            var runner14 =
+                client.RunCommand("scp ./netcard.txt basicks@192.168.56.128:~/test"); 
+            
+            var runner15 = client.RunCommand("rm hostname.txt");
+            var runner16 = client.RunCommand("rm cpu.txt");
+            var runner17 = client.RunCommand("rm motherboard.txt");
+            var runner18 = client.RunCommand("rm harddisk.txt");
+            var runner19 = client.RunCommand("rm GPUout.txt");
+            var runner20 = client.RunCommand("rm OZUout.txt");
+            var runner21 = client.RunCommand("rm netcard.txt");
+            
             client.Disconnect();
             if (runner.ExitStatus != 0)
             {
@@ -65,44 +87,137 @@ public partial class MainWindow : Window
             }
             else if (runner2.ExitStatus != 0)
             {
-                var messageBoxStandardWindow = MessageBox.Avalonia.MessageBoxManager
+                var messageBoxStandardWindow2 = MessageBox.Avalonia.MessageBoxManager
                     .GetMessageBoxStandardWindow("Ошибка!", runner2.Error);
-                messageBoxStandardWindow.Show();
+                messageBoxStandardWindow2.Show();
             }
             else if (runner3.ExitStatus != 0)
             {
-                var messageBoxStandardWindow = MessageBox.Avalonia.MessageBoxManager
+                var messageBoxStandardWindow3 = MessageBox.Avalonia.MessageBoxManager
                     .GetMessageBoxStandardWindow("Ошибка!", runner3.Error);
-                messageBoxStandardWindow.Show();
+                messageBoxStandardWindow3.Show();
             }
             else if (runner4.ExitStatus != 0)
             {
-                var messageBoxStandardWindow = MessageBox.Avalonia.MessageBoxManager
+                var messageBoxStandardWindow4 = MessageBox.Avalonia.MessageBoxManager
                     .GetMessageBoxStandardWindow("Ошибка!", runner4.Error);
-                messageBoxStandardWindow.Show();
+                messageBoxStandardWindow4.Show();
             }
             else if (runner5.ExitStatus != 0)
             {
-                var messageBoxStandardWindow = MessageBox.Avalonia.MessageBoxManager
+                var messageBoxStandardWindow5 = MessageBox.Avalonia.MessageBoxManager
                     .GetMessageBoxStandardWindow("Ошибка!", runner5.Error);
-                messageBoxStandardWindow.Show();
+                messageBoxStandardWindow5.Show();
             }
             else if (runner6.ExitStatus != 0)
             {
-                var messageBoxStandardWindow = MessageBox.Avalonia.MessageBoxManager
+                var messageBoxStandardWindow6 = MessageBox.Avalonia.MessageBoxManager
                     .GetMessageBoxStandardWindow("Успешно!", runner6.Error);
-                messageBoxStandardWindow.Show();
+                messageBoxStandardWindow6.Show();
             }
-        }*/
+            else if (runner7.ExitStatus != 0)
+            {
+                var messageBoxStandardWindow7 = MessageBox.Avalonia.MessageBoxManager
+                    .GetMessageBoxStandardWindow("Ошибка!", runner7.Error);
+                messageBoxStandardWindow7.Show();
+            }
+            else if (runner8.ExitStatus != 0)
+            {
+                var messageBoxStandardWindow8 = MessageBox.Avalonia.MessageBoxManager
+                    .GetMessageBoxStandardWindow("Ошибка!", runner8.Error);
+                messageBoxStandardWindow8.Show();
+            }
+            else if (runner9.ExitStatus != 0)
+            {
+                var messageBoxStandardWindow9 = MessageBox.Avalonia.MessageBoxManager
+                    .GetMessageBoxStandardWindow("Ошибка!", runner9.Error);
+                messageBoxStandardWindow9.Show();
+            }
+            else if (runner10.ExitStatus != 0)
+            {
+                var messageBoxStandardWindow10 = MessageBox.Avalonia.MessageBoxManager
+                    .GetMessageBoxStandardWindow("Ошибка!", runner10.Error);
+                messageBoxStandardWindow10.Show();
+            }
+            else if (runner11.ExitStatus != 0)
+            {
+                var messageBoxStandardWindow11 = MessageBox.Avalonia.MessageBoxManager
+                    .GetMessageBoxStandardWindow("Успешно!", runner11.Error);
+                messageBoxStandardWindow11.Show();
+            }
+            else if (runner12.ExitStatus != 0)
+            {
+                var messageBoxStandardWindow12 = MessageBox.Avalonia.MessageBoxManager
+                    .GetMessageBoxStandardWindow("Успешно!", runner12.Error);
+                messageBoxStandardWindow12.Show();
+            }
+            else if (runner13.ExitStatus != 0)
+            {
+                var messageBoxStandardWindow13 = MessageBox.Avalonia.MessageBoxManager
+                    .GetMessageBoxStandardWindow("Успешно!", runner13.Error);
+                messageBoxStandardWindow13.Show();
+            }
+            else if (runner14.ExitStatus != 0)
+            {
+                var messageBoxStandardWindow14 = MessageBox.Avalonia.MessageBoxManager
+                    .GetMessageBoxStandardWindow("Успешно!", runner14.Error);
+                messageBoxStandardWindow14.Show();
+            }
+            else if (runner15.ExitStatus != 0)
+            {
+                var messageBoxStandardWindow15 = MessageBox.Avalonia.MessageBoxManager
+                    .GetMessageBoxStandardWindow("Успешно!", runner15.Error);
+                messageBoxStandardWindow15.Show();
+            }
+            else if (runner16.ExitStatus != 0)
+            {
+                var messageBoxStandardWindow16 = MessageBox.Avalonia.MessageBoxManager
+                    .GetMessageBoxStandardWindow("Успешно!", runner16.Error);
+                messageBoxStandardWindow16.Show();
+            }
+            else if (runner17.ExitStatus != 0)
+            {
+                var messageBoxStandardWindow17 = MessageBox.Avalonia.MessageBoxManager
+                    .GetMessageBoxStandardWindow("Успешно!", runner17.Error);
+                messageBoxStandardWindow17.Show();
+            }
+            else if (runner18.ExitStatus != 0)
+            {
+                var messageBoxStandardWindow18 = MessageBox.Avalonia.MessageBoxManager
+                    .GetMessageBoxStandardWindow("Успешно!", runner18.Error);
+                messageBoxStandardWindow18.Show();
+            }
+            else if (runner19.ExitStatus != 0)
+            {
+                var messageBoxStandardWindow19 = MessageBox.Avalonia.MessageBoxManager
+                    .GetMessageBoxStandardWindow("Успешно!", runner19.Error);
+                messageBoxStandardWindow19.Show();
+            }
+            else if (runner20.ExitStatus != 0)
+            {
+                var messageBoxStandardWindow20 = MessageBox.Avalonia.MessageBoxManager
+                    .GetMessageBoxStandardWindow("Успешно!", runner20.Error);
+                messageBoxStandardWindow20.Show();
+            }
+            else if (runner21.ExitStatus != 0)
+            {
+                var messageBoxStandardWindow21 = MessageBox.Avalonia.MessageBoxManager
+                    .GetMessageBoxStandardWindow("Успешно!", runner21.Error);
+                messageBoxStandardWindow21.Show();
+            }
+        }
         
-        List<Info_comp> ic = new List<Info_comp>();
         List<Info_comps> ic2 = new List<Info_comps>();
         string[] str =  File.ReadAllLines(@"C:\Users\sasha\OneDrive\Рабочий стол\info\cputest.txt");
         string[] str2 =  File.ReadAllLines(@"C:\Users\sasha\OneDrive\Рабочий стол\info\hostname.txt");
         string[] str3 =  File.ReadAllLines(@"C:\Users\sasha\OneDrive\Рабочий стол\info\mattest.txt");
+        string[] str4 =  File.ReadAllLines(@"C:\Users\sasha\OneDrive\Рабочий стол\info\OZUout.txt");
+        string[] str5 =  File.ReadAllLines(@"C:\Users\sasha\OneDrive\Рабочий стол\info\GPUout.txt");
+        string[] str6 =  File.ReadAllLines(@"C:\Users\sasha\OneDrive\Рабочий стол\info\harddisk.txt");
+        string[] str7 =  File.ReadAllLines(@"C:\Users\sasha\OneDrive\Рабочий стол\info\netcard.txt");
 
+        
         string hs="1", cpu ="1", motherboard="1", harddisk = "1", videocard = "1", ozu = "1", networkcard = "1";
-        bool hsisemptu = true, cpuisemptu = true, motherboardisemptu = true;
         int count=0;
         
         for (int i = 0; i < str.Length; i++)
@@ -133,6 +248,7 @@ public partial class MainWindow : Window
         }
         for (int i = 0; i < str3.Length; i++)
         {
+            
             string proc = str3[i].Split(':')[1];
             motherboard = proc;
             count++;
@@ -144,21 +260,27 @@ public partial class MainWindow : Window
             break;
         }
         
-        for (int i = 0; i < str3.Length; i++)
+        for (int i = 0; i < str6.Length; i++)
         {
-            harddisk = "sda1   8:1    0  18G";
-            count++;
-            ic2.Add(new Info_comps()
+            if (str6[i].Contains("sda"))
             {
-                Discription = "Жесткий диск",
-                Value = harddisk
-            });
-            break;
+                string disk = str6[i];
+                harddisk = disk;
+                count++;
+                ic2.Add(new Info_comps()
+                {
+                    Discription = "Жесткий диск",
+                    Value = harddisk
+                });
+                break;
+            }
+            
         }
         
-        for (int i = 0; i < str3.Length; i++)
+        for (int i = 0; i < str5.Length; i++)
         {
-            videocard = "VMware SVGA II Adapter";
+            string card = str5[i].Split(':')[1];
+            videocard = card;
             count++;
             ic2.Add(new Info_comps()
             {
@@ -168,21 +290,27 @@ public partial class MainWindow : Window
             break;
         }
         
-        for (int i = 0; i < str3.Length; i++)
+        for (int i = 0; i < str4.Length; i++)
         {
-            ozu = "Size: 2048 MB";
-            count++;
-            ic2.Add(new Info_comps()
+            if (str4[i].Contains("Size"))
             {
-                Discription = "ОЗУ",
-                Value = ozu
-            });
-            break;
+                string op = str4[i].Split(':')[1];
+                ozu = op;
+                count++;
+                ic2.Add(new Info_comps()
+                {
+                    Discription = "ОЗУ",
+                    Value = ozu
+                });
+                break;
+            }
+            
         }
         
-        for (int i = 0; i < str3.Length; i++)
+        for (int i = 0; i < str7.Length; i++)
         {
-            networkcard = "Intel Corporation 82545EM Gigabit Ethernet Controller (Copper) (rev 01)";
+            string net = str7[i].Split("r:")[1];
+            networkcard = net;
             count++;
             ic2.Add(new Info_comps()
             {
@@ -191,30 +319,13 @@ public partial class MainWindow : Window
             });
             break;
         }
-
-
-        /*if (hs != "1" && cpu !="1" && motherboard != "1")
-        {
-
-            for (int i = 1; i < count; i++)
-            ic.Add(new Info_comp()
-            {
-                ComputerName = hs,
-                ProccessorName = cpu,
-                MotherboardName = motherboard
-            });
-            Table1.Items = ic;
-            var messageBoxStandardWindow = MessageBox.Avalonia.MessageBoxManager
-                .GetMessageBoxStandardWindow("Успешно!", "запрос выполнился!");
-            messageBoxStandardWindow.Show();
-        }
-        /*string cn = "test";
-        InfoComps.Add(new Info_comp()
-        {
-            ComputerName =  cn
-        });
-        Load();*/
         Table1.Items = ic2;
+        ProcessStartInfo startInfo = new ProcessStartInfo() {FileName = "/bin/bash", Arguments = "rm cputest.txt hostname.txt mattest.txt OZUout.txt GPUout.txt harddisk.txt netcard.txt"};
+        Process proces = new Process() { StartInfo = startInfo, };
+        proces.Start();
+        var messageBoxStandardWindow22 = MessageBox.Avalonia.MessageBoxManager
+            .GetMessageBoxStandardWindow("Успешно!", "запрос выполнился!");
+        messageBoxStandardWindow22.Show();
     }
 
     private void OnAutoGeneratingColumn(object? sender, DataGridAutoGeneratingColumnEventArgs e)
@@ -239,37 +350,6 @@ public partial class MainWindow : Window
         return false;
     }
 
-    private void Othcet_pdf_OnClick(object? sender, RoutedEventArgs e)
-    {
-        if (Table1.Items == null)
-        {
-            return;
-        }   
-        
-        using (Document document = new Document())
-        {
-            BaseFont baseFont = BaseFont.CreateFont("C:/Windows/Fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-            iTextSharp.text.Font font = new iTextSharp.text.Font(baseFont, iTextSharp.text.Font.DEFAULTSIZE, iTextSharp.text.Font.NORMAL);
-             
-            PdfWriter.GetInstance(document, new FileStream("C:/Users/sasha/Downloads/file.pdf", FileMode.Create));
-            document.Open();
-        
-            PdfPTable pdfTable = new PdfPTable(Table1.Columns.Count);
-            pdfTable.AddCell(new PdfPCell(new Phrase("Название компьютера", font)));
-            pdfTable.AddCell(new PdfPCell(new Phrase("Процессор", font)));
-            pdfTable.AddCell(new PdfPCell(new Phrase("Материнская плата", font)));
-             
-            foreach (Info_comp computerInfo in Table1.Items)
-            {
-                pdfTable.AddCell(new PdfPCell(new Phrase(computerInfo.ComputerName, font)));
-                pdfTable.AddCell(new PdfPCell(new Phrase(computerInfo.ProccessorName, font)));
-                pdfTable.AddCell(new PdfPCell(new Phrase(computerInfo.MotherboardName, font)));
-            }
-        
-            document.Add(pdfTable);  
-        }
-    }
-
     private void Otchet_excel_OnClick(object? sender, RoutedEventArgs e)
     {
         if (Table1.Items == null)
@@ -291,16 +371,14 @@ public partial class MainWindow : Window
             var worksheet = workbook.Worksheets.Add("Информация о комлектующих");
          
             int row = 1;
-            worksheet.Cell("A1").Value = "Hostname";
-            worksheet.Cell("B1").Value = "Processor";
-            worksheet.Cell("C1").Value = "Motherboard";
+            worksheet.Cell("A1").Value = "Название";
+            worksheet.Cell("B1").Value = "Значение";
             row++;
 
-            foreach (Info_comp computerInfo in Table1.Items)
+            foreach (Info_comps computerInfo in Table1.Items)
             {
-                worksheet.Cell("A" + row).Value = computerInfo.ComputerName;
-                worksheet.Cell("B" + row).Value = computerInfo.ProccessorName;
-                worksheet.Cell("C" + row).Value = computerInfo.MotherboardName;
+                worksheet.Cell("A" + row).Value = computerInfo.Discription;
+                worksheet.Cell("B" + row).Value = computerInfo.Value;
                 row++;
             }
 

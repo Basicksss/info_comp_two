@@ -26,16 +26,17 @@
                     <Button Name="Request" Content="Запрос" Foreground="White" Background="Black"
                             Height="30" Width="250" HorizontalAlignment="Center" Margin="0 20 0 0"
                             HorizontalContentAlignment="Center" Click="Request_OnClick"/>
-                    <Button Name="Othcet_pdf" Content="Сформировать отчет в PDF" Foreground="White" Background="Black"
-                            Height="30" Width="250" HorizontalAlignment="Center" Margin="0 20 0 0"
-                            HorizontalContentAlignment="Center" Click="Othcet_pdf_OnClick"/>
                     <Button Name="Otchet_excel" Content="Сформировать отчет в Excel" Foreground="White" Background="Black"
                             Height="30" Width="250" HorizontalAlignment="Center" Margin="0 20 0 0"
                             HorizontalContentAlignment="Center" Click="Otchet_excel_OnClick"/>
                 </StackPanel>
             </Border>
             <DataGrid Grid.Column="1" Background="White" CornerRadius="20" SelectionChanged="Table1_OnSelectionChanged"
-                      Margin="20" Name="Table1" IsReadOnly="True" AutoGenerateColumns="True">
+                      Margin="20" Name="Table1" IsReadOnly="True" AutoGenerateColumns="False" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Название" Binding="{Binding Discription}"/>
+                    <DataGridTextColumn Header="Значение" Binding="{Binding Value}"/>
+                </DataGrid.Columns>
             </DataGrid>
         </Grid>
 </Window>
