@@ -1,0 +1,41 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" WindowState="Maximized"
+        x:Class="Info_comp_project.MainWindow"
+        Title="Главное окно">
+        <Grid Background="black">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Border CornerRadius="20" Background="#373737" 
+                    Height="800" Width="300" HorizontalAlignment="Left" 
+                    VerticalAlignment="Center" Margin="20 0 20 0">
+                <StackPanel>
+                    <TextBox Name="DNS_name" Watermark="Введите доменное имя"
+                             Background="white" Foreground="black" HorizontalContentAlignment="Left"
+                             Height="30" Width="250" Margin="0 20 0 0"/>
+                    <TextBox Name="loginTB" Watermark="Введите логин"
+                             Background="white" Foreground="black" HorizontalContentAlignment="Left"
+                             Height="30" Width="250" Margin="0 20 0 0"/>
+                    <TextBox Name="PassTB" Watermark="Введите пароль" PasswordChar="*"
+                             Background="white" Foreground="black" HorizontalContentAlignment="Left"
+                             Height="30" Width="250" Margin="0 20 0 0"/>
+                    <Button Name="Request" Content="Запрос" Foreground="White" Background="Black"
+                            Height="30" Width="250" HorizontalAlignment="Center" Margin="0 20 0 0"
+                            HorizontalContentAlignment="Center" Click="Request_OnClick"/>
+                    <Button Name="Othcet_pdf" Content="Сформировать отчет в PDF" Foreground="White" Background="Black"
+                            Height="30" Width="250" HorizontalAlignment="Center" Margin="0 20 0 0"
+                            HorizontalContentAlignment="Center" Click="Othcet_pdf_OnClick"/>
+                    <Button Name="Otchet_excel" Content="Сформировать отчет в Excel" Foreground="White" Background="Black"
+                            Height="30" Width="250" HorizontalAlignment="Center" Margin="0 20 0 0"
+                            HorizontalContentAlignment="Center" Click="Otchet_excel_OnClick"/>
+                </StackPanel>
+            </Border>
+            <DataGrid Grid.Column="1" Background="White" CornerRadius="20" SelectionChanged="Table1_OnSelectionChanged"
+                      Margin="20" Name="Table1" IsReadOnly="True" AutoGenerateColumns="True">
+            </DataGrid>
+        </Grid>
+</Window>
