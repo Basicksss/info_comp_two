@@ -22,7 +22,7 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
     }
-
+    
     private async void Request_OnClick(object? sender, RoutedEventArgs e)
     {
         if (DNS_name.Text == " " || loginTB.Text == " " || PassTB.Text == " ")
@@ -75,7 +75,7 @@ public partial class MainWindow : Window
             var runner6 = client.RunCommand("sudo dmidecode --type 17 > OZUout.txt");
             var runner7 = client.RunCommand("lspci | grep -i 'net' > netcard.txt");
 
-            var runner23 = client.RunCommand("mkdir test");
+            var runner22 = client.RunCommand("mkdir test");
             var runner8 =
                 client.RunCommand($"scp ./hostname.txt {host}@{addres2}:~/test");
             var runner9 =
@@ -98,7 +98,7 @@ public partial class MainWindow : Window
             var runner19 = client.RunCommand("rm GPUout.txt");
             var runner20 = client.RunCommand("rm OZUout.txt");
             var runner21 = client.RunCommand("rm netcard.txt");
-            var runner22 = client.RunCommand("rmdir test");
+            var runner23 = client.RunCommand("rmdir test");
 
             
             client.Disconnect();
@@ -385,7 +385,7 @@ public partial class MainWindow : Window
             return;
         }
 
-        const string filename = "C:/Users/sasha/Downloads/file.xlsx";
+        const string filename = "Домашняя/Desktop/file.xlsx";
         if (IsFileInUse(filename))
         {
             var messageBoxStandardWindow = MessageBox.Avalonia.MessageBoxManager
