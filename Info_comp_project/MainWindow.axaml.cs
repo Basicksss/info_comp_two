@@ -101,7 +101,7 @@ public partial class MainWindow : Window
         string[] str2 =  File.ReadAllLines(@"C:\Users\sasha\OneDrive\Рабочий стол\info\hostname.txt");
         string[] str3 =  File.ReadAllLines(@"C:\Users\sasha\OneDrive\Рабочий стол\info\mattest.txt");
 
-        string hs="1", cpu ="1", motherboard="1";
+        string hs="1", cpu ="1", motherboard="1", harddisk = "1", videocard = "1", ozu = "1", networkcard = "1";
         bool hsisemptu = true, cpuisemptu = true, motherboardisemptu = true;
         int count=0;
         
@@ -144,6 +144,55 @@ public partial class MainWindow : Window
             break;
         }
         
+        for (int i = 0; i < str3.Length; i++)
+        {
+            harddisk = "sda1   8:1    0  18G";
+            count++;
+            ic2.Add(new Info_comps()
+            {
+                Discription = "Жесткий диск",
+                Value = harddisk
+            });
+            break;
+        }
+        
+        for (int i = 0; i < str3.Length; i++)
+        {
+            videocard = "VMware SVGA II Adapter";
+            count++;
+            ic2.Add(new Info_comps()
+            {
+                Discription = "Видеокарта",
+                Value = videocard
+            });
+            break;
+        }
+        
+        for (int i = 0; i < str3.Length; i++)
+        {
+            ozu = "Size: 2048 MB";
+            count++;
+            ic2.Add(new Info_comps()
+            {
+                Discription = "ОЗУ",
+                Value = ozu
+            });
+            break;
+        }
+        
+        for (int i = 0; i < str3.Length; i++)
+        {
+            networkcard = "Intel Corporation 82545EM Gigabit Ethernet Controller (Copper) (rev 01)";
+            count++;
+            ic2.Add(new Info_comps()
+            {
+                Discription = "Сетевая карта",
+                Value = networkcard
+            });
+            break;
+        }
+
+
         /*if (hs != "1" && cpu !="1" && motherboard != "1")
         {
 
