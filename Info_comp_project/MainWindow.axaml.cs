@@ -41,22 +41,17 @@ public partial class MainWindow : Window
             видеокарта - lspci | grep -E "VGA|3D"
             озу - sudo dmidecode --type 17
             сетевая карта -  lspci | grep -i 'net'            
-        */
-        
-        ProcessStartInfo startInfo2 = new ProcessStartInfo() { FileName = "/bin/bash", Arguments = "mkdir info", }; 
+        */ 
+            /*ProcessStartInfo startInfo2 = new ProcessStartInfo() { FileName = "/bin/bash", Arguments = "mkdir info", }; 
         Process proces = new Process() { StartInfo = startInfo2, };
-        proces.Start();
+        proces.Start();*/
         
         
         var mainhost = System.Net.Dns.GetHostName();
         IPAddress addres1 = Dns.GetHostAddresses(mainhost).First<IPAddress>(f=>f.AddressFamily==System.Net.Sockets.AddressFamily.InterNetwork);
         string addres2 = Convert.ToString(addres1);
-
-        var abc = await Dns.GetHostEntryAsync(DNS_name.Text);
-        string domain_name = Convert.ToString(abc);
-        IPAddress addres3 = Dns.GetHostAddresses(domain_name).First<IPAddress>(f=>f.AddressFamily==System.Net.Sockets.AddressFamily.InterNetwork);
-        string addres4 = Convert.ToString(addres3);
-        string host = Convert.ToString(domain_name);
+        IPAddress addres3 = Dns.GetHostAddresses(DNS_name.Text).First<IPAddress>(f=>f.AddressFamily==System.Net.Sockets.AddressFamily.InterNetwork);
+        string host = Convert.ToString(addres3);
         string username;
         string password;
         username = loginTB.Text;
@@ -75,21 +70,20 @@ public partial class MainWindow : Window
             var runner6 = client.RunCommand("sudo dmidecode --type 17 > OZUout.txt");
             var runner7 = client.RunCommand("lspci | grep -i 'net' > netcard.txt");
 
-            var runner22 = client.RunCommand("mkdir test");
             var runner8 =
-                client.RunCommand($"scp ./hostname.txt {host}@{addres2}:~/test");
+                client.RunCommand($"scp ./hostname.txt {mainhost}@{addres2}:~/TEST/info");
             var runner9 =
-                client.RunCommand($"scp ./cpu.txt {host}@{addres2}:~/test");
+                client.RunCommand($"scp ./cpu.txt {mainhost}@{addres2}:~/TEST/info");
             var runner10 =
-                client.RunCommand($"scp ./motherboard.txt {host}@{addres2}:~/test");
+                client.RunCommand($"scp ./motherboard.txt {mainhost}@{addres2}:~/TEST/info");
             var runner11 =
-                client.RunCommand($"scp ./harddisk.txt {host}@{addres2}:~/test");
+                client.RunCommand($"scp ./harddisk.txt {mainhost}@{addres2}:~/TEST/info");
             var runner12 =
-                client.RunCommand($"scp ./GPUout.txt {host}@{addres2}:~/test");
+                client.RunCommand($"scp ./GPUout.txt {mainhost}@{addres2}:~/TEST/info");
             var runner13 =
-                client.RunCommand($"scp ./OZUout.txt {host}@{addres2}:~/test");
+                client.RunCommand($"scp ./OZUout.txt {mainhost}@{addres2}:~/TEST/info");
             var runner14 =
-                client.RunCommand($"scp ./netcard.txt {host}@{addres2}:~/test"); 
+                client.RunCommand($"scp ./netcard.txt {mainhost}@{addres2}:~/TEST/info"); 
             
             var runner15 = client.RunCommand("rm hostname.txt");
             var runner16 = client.RunCommand("rm cpu.txt");
@@ -98,7 +92,6 @@ public partial class MainWindow : Window
             var runner19 = client.RunCommand("rm GPUout.txt");
             var runner20 = client.RunCommand("rm OZUout.txt");
             var runner21 = client.RunCommand("rm netcard.txt");
-            var runner23 = client.RunCommand("rmdir test");
 
             
             client.Disconnect();
@@ -231,13 +224,13 @@ public partial class MainWindow : Window
         }
 
         List<Info_comps> ic2 = new List<Info_comps>();
-        string[] str =  File.ReadAllLines(@".\info\cputest.txt");
-        string[] str2 =  File.ReadAllLines(@".\info\hostname.txt");
-        string[] str3 =  File.ReadAllLines(@".\info\mattest.txt");
-        string[] str4 =  File.ReadAllLines(@".\info\OZUout.txt");
-        string[] str5 =  File.ReadAllLines(@".\info\GPUout.txt");
-        string[] str6 =  File.ReadAllLines(@".\info\harddisk.txt");
-        string[] str7 =  File.ReadAllLines(@".\info\netcard.txt");
+        string[] str =  File.ReadAllLines(@"TEST/info/cputest.txt");
+        string[] str2 =  File.ReadAllLines(@"TEST/info/hostname.txt");
+        string[] str3 =  File.ReadAllLines(@"TEST/mattest.txt");
+        string[] str4 =  File.ReadAllLines(@"TEST/info/OZUout.txt");
+        string[] str5 =  File.ReadAllLines(@"TEST/info/GPUout.txt");
+        string[] str6 =  File.ReadAllLines(@"TEST/info/harddisk.txt");
+        string[] str7 =  File.ReadAllLines(@"TEST/info/netcard.txt");
 
         
         string hs="1", cpu ="1", motherboard="1", harddisk = "1", videocard = "1", ozu = "1", networkcard = "1", proc = "1";
@@ -343,16 +336,17 @@ public partial class MainWindow : Window
             break;
         }
         Table1.Items = ic2;
-        ProcessStartInfo startInfo = new ProcessStartInfo() {FileName = "/bin/bash", Arguments = "cd ./info; rm cputest.txt hostname.txt mattest.txt OZUout.txt GPUout.txt harddisk.txt netcard.txt"};
+        /*ProcessStartInfo startInfo = new ProcessStartInfo() {FileName = "/bin/bash", Arguments = "cd ./info; rm cputest.txt hostname.txt mattest.txt OZUout.txt GPUout.txt harddisk.txt netcard.txt"};
         proces = new Process() { StartInfo = startInfo, };
         proces.Start();
-        var messageBoxStandardWindow22 = MessageBox.Avalonia.MessageBoxManager
-            .GetMessageBoxStandardWindow("Успешно!", "запрос выполнился!");
-        messageBoxStandardWindow22.Show();
+        
         
         ProcessStartInfo startInfo3 = new ProcessStartInfo() { FileName = "/bin/bash", Arguments = "rmdir info", }; 
         Process proces2 = new Process() { StartInfo = startInfo3, };
-        proces2.Start();
+        proces2.Start();*/
+        var messageBoxStandardWindow22 = MessageBox.Avalonia.MessageBoxManager
+            .GetMessageBoxStandardWindow("Успешно!", "запрос выполнился!");
+        messageBoxStandardWindow22.Show();
         }
     }
 
